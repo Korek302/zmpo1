@@ -10,6 +10,39 @@ int main()
 	bool b_isCreated = false;
 	vector<CTable*> v_tableVector;
 
+
+
+	/*CTable* temp0 = new CTable();
+	v_tableVector.push_back(temp0);
+
+	(*v_tableVector[0]).vSetName("tab1");
+
+	CTable* temp1 = new CTable(*v_tableVector[0]);
+	v_tableVector.push_back(temp1);
+
+	v_tableVector.push_back(new CTable("tab3", 7));
+
+	(*v_tableVector[2]).bSetValue(4, 2);
+
+	(*v_tableVector[0]).bSetValue(5, 2);
+
+	(*v_tableVector[1]).iGetValue(2, 0);
+
+	(*v_tableVector[1]).iGetValue(2, 0);
+
+	(*v_tableVector[0]).iGetValue(2, 0);
+
+	(*v_tableVector[2]).iGetValue(2, 0);
+
+	(*v_tableVector[0]).iGetValue(0, 0);
+
+	(*v_tableVector[0]).bSetTableLength(10);
+
+	v_tableVector.erase(v_tableVector.begin() + 0);*/
+
+
+
+
 	cout << "1. Create any number of CTable objects" << endl
 		<< "2. Define table length for one of the created CTable object" << endl
 		<< "3. Delete one of the objects" << endl
@@ -204,9 +237,12 @@ int main()
 		case '0':
 		{
 			string name;
+			int length;
 			cout << "Submit object name" << endl;
 			cin >> name;
-			v_tableVector.push_back(new CTable(name));
+			cout << "Submit object length" << endl;
+			cin >> length;
+			v_tableVector.push_back(new CTable(name, length));
 			cout << "Object " << name << " created" << endl;
 			b_isCreated = true;
 		}break;

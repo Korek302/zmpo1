@@ -112,7 +112,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="CTable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CTable.h" />

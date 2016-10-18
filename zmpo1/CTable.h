@@ -12,8 +12,8 @@ private:
 	int* pi_table;
 public:
 	CTable();
-	CTable(string sName);
-	CTable(string table, int length, int* tab);
+	CTable(string sName, int iLen);
+	//CTable(string table, int length, int* tab);
 	CTable(const CTable &pcOther);
 	~CTable();
 	int iGetLength();
