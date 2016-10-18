@@ -21,10 +21,10 @@ public:
 	bool bSetTableLength(int length);
 	bool bSetValue(int value, int pocket);
 	int iGetValue(int pocket, int success);
-	CTable clone();
-	void CopyTable(CTable table);
+	CTable Clone();
+	void vCopyTable(CTable table);
 	string sToString();
 	//CTable &operator = (const CTable &C1);
 };
 
-string intToStr(int n);
+string sIntToStr(int n);

@@ -115,12 +115,12 @@ int CTable::iGetValue(int pocket, int success)
 	}
 }
 
-CTable CTable::clone()
+CTable CTable::Clone()
 {
 	return CTable(*this);
 }
 
-void CTable::CopyTable(CTable table)
+void CTable::vCopyTable(CTable table)
 {
 	bSetTableLength(i_length);
 	for (int i = 0; i < i_length; i++)
@@ -131,14 +131,14 @@ void CTable::CopyTable(CTable table)
 
 string CTable::sToString()
 {
-	string temp = s_name + "\nlen: " + intToStr(i_length) + "\nvalues: ";
+	string temp = s_name + "\nlen: " + sIntToStr(i_length) + "\nvalues: ";
 
 	for (int i = 0; i < i_length; i++)
 	{
 		if (i < i_length - 1)
-			temp += intToStr(pi_table[i]) + ", ";
+			temp += sIntToStr(pi_table[i]) + ", ";
 		else
-			temp += intToStr(pi_table[i]);
+			temp += sIntToStr(pi_table[i]);
 	}
 	temp += "\n";
 	return temp;
@@ -160,7 +160,7 @@ string CTable::sToString()
 	}
 }*/
 
-string intToStr(int n)
+string sIntToStr(int n)
 {
 	string temp;
 	if (n < 0)
@@ -169,7 +169,7 @@ string intToStr(int n)
 		n = -n;
 	}
 	if (n > 9)
-		temp += intToStr(n / 10);
+		temp += sIntToStr(n / 10);
 	temp += n % 10 + 48;
 	return temp;
 }
