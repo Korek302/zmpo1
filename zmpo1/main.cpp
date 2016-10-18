@@ -8,7 +8,7 @@ int main()
 {
 	string s_choice;
 	bool b_isCreated = false;
-	vector<CTable> v_tableVector;
+	vector<CTable*> v_tableVector;
 
 	cout << "1. Create any number of CTable objects" << endl
 		<< "2. Define table length for one of the created CTable object" << endl
@@ -17,7 +17,11 @@ int main()
 		<< "5. Rename one of the objects" << endl
 		<< "6. Clone one of the objects" << endl
 		<< "7. Print one of the objects" << endl
-		<< "8. Set one of the values of one of the pockets of one of the objects" << endl;
+		<< "8. Set one of the values of one of the pockets of one of the objects" << endl
+		<< "9. Print all objects" << endl
+		<< "0. Create object using parameter constructor" << endl
+		<< "e to exit" << endl
+		<< "pressing any other button will clear the vector" << endl;
 
 	do
 	{
@@ -32,24 +36,22 @@ int main()
 		{
 		case '1':
 		{
-			if (!b_isCreated)
+			int quantity;
+			cout << "How many objects?" << endl;
+			cin >> quantity;
+			for (int i = 0; i < quantity; i++)
 			{
-				int quantity;
-				cout << "How many objects?" << endl;
-				cin >> quantity;
-				//v_tableVector = new vector<CTable>(quantity);
-				v_tableVector.resize(quantity);
-				cout << v_tableVector.size() << " objects created" << endl;
-				b_isCreated = true;
+				CTable* temp = new CTable();
+				v_tableVector.push_back(temp);
 			}
-			else
-				cout << "Objects already created" << endl;
+			cout << v_tableVector.size() << " objects created" << endl;
+			b_isCreated = true;
 		}break;
 
 		case '2':
 		{
 			if (!b_isCreated)
-				cout << "None object created";
+				cout << "None object created" << endl;
 			else
 			{
 				int objectNumber;
@@ -62,7 +64,7 @@ int main()
 				{
 					cout << "What length?" << endl;
 					cin >> newLength;
-					v_tableVector[objectNumber].bSetTableLength(newLength);
+					(*v_tableVector[objectNumber]).bSetTableLength(newLength);
 					cout << "Object " << objectNumber << ", new length: " << newLength << endl;
 				}
 			}
@@ -90,7 +92,7 @@ int main()
 		case '4':
 		{
 			if (!b_isCreated)
-				cout << "None object created";
+				cout << "None object created" << endl;
 			else
 			{
 				v_tableVector.clear();
@@ -101,7 +103,7 @@ int main()
 		case '5':
 		{
 			if (!b_isCreated)
-				cout << "None object created";
+				cout << "None object created" << endl;
 			else
 			{
 				int objectNumber;
@@ -114,7 +116,7 @@ int main()
 					string newName;
 					cout << "Submit new name" << endl;
 					cin >> newName;
-					v_tableVector[objectNumber].vSetName(newName);
+					(*v_tableVector[objectNumber]).vSetName(newName);
 					cout << "Object " << objectNumber << " is now named " << newName << endl;
 				}
 			}
@@ -123,7 +125,7 @@ int main()
 		case '6':
 		{
 			if (!b_isCreated)
-				cout << "None object created";
+				cout << "None object created" << endl;
 			else
 			{
 				int objectNumber;
@@ -133,7 +135,7 @@ int main()
 					cout << "Wrong number" << endl;
 				else
 				{
-					CTable temp(v_tableVector[objectNumber]);
+					CTable* temp = new CTable(*v_tableVector[objectNumber]);
 					v_tableVector.push_back(temp);
 					cout << "Object " << objectNumber << " has been cloned" << endl;
 				}
@@ -143,7 +145,7 @@ int main()
 		case '7':
 		{
 			if (!b_isCreated)
-				cout << "None object created";
+				cout << "None object created" << endl;
 			else
 			{
 				int objectNumber;
@@ -153,7 +155,7 @@ int main()
 					cout << "Wrong number" << endl;
 				else
 				{
-					cout << v_tableVector[objectNumber].sToString() << endl;
+					cout << (*v_tableVector[objectNumber]).sToString() << endl;
 				}
 			}
 		}break;
@@ -161,7 +163,7 @@ int main()
 		case '8':
 		{
 			if (!b_isCreated)
-				cout << "None object created";
+				cout << "None object created" << endl;
 			else
 			{
 				int objectNumber;
@@ -175,17 +177,38 @@ int main()
 				{
 					cout << "Which pocket?" << endl;
 					cin >> pocket;
-					if (pocket > v_tableVector[objectNumber].iGetLength() || pocket < 0)
+					if (pocket > (*v_tableVector[objectNumber]).iGetLength() || pocket < 0)
 						cout << "Wrong number of pocket" << endl;
 					else
 					{
 						cout << "Submit new value" << endl;
 						cin >> newValue;
-						v_tableVector[objectNumber].bSetValue(newValue, pocket);
+						(*v_tableVector[objectNumber]).bSetValue(newValue, pocket);
 						cout << "Object " << objectNumber << ", pocket " << pocket << ", new value " << newValue << endl;
 					}
 				}
 			}
+		}break;
+
+		case '9':
+		{
+			if (!b_isCreated)
+				cout << "None object created" << endl;
+			else
+			{
+				for(int i = 0; i < v_tableVector.size(); i++)
+					cout << (*v_tableVector[i]).sToString() << endl;
+			}
+		}break;
+
+		case '0':
+		{
+			string name;
+			cout << "Submit object name" << endl;
+			cin >> name;
+			v_tableVector.push_back(new CTable(name));
+			cout << "Object " << name << " created" << endl;
+			b_isCreated = true;
 		}break;
 
 		default:
@@ -199,7 +222,7 @@ int main()
 		}break;
 		}
 
-	} while (s_choice[0] != '0');
+	} while (s_choice[0] != 'e');
 
 
 	getchar();
