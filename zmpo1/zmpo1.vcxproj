@@ -113,9 +113,13 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CTable.cpp" />
+    <ClCompile Include="Osoba.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CTable.h" />
+    <ClInclude Include="NoneObjectsCreatedException.h" />
+    <ClInclude Include="Osoba.h" />
+    <ClInclude Include="WrongIndexException.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,51 +2,42 @@
 
 #define DEFAULT_NAME "default CTable"
 #define DEFAULT_SIZE 5
-#define DEFAULT_VALUE -1
+#define DEFAULT_VALUE NULL
 
-CTable::CTable()
+template<class T>
+CTable<T>::CTable()
 {
 	s_name = DEFAULT_NAME;
 	i_length = DEFAULT_SIZE;
-	pi_table = new int[i_length];
+	pi_table = new T[i_length];
 	cout << "bezp: " << s_name << endl;
 
-	for (int i = 0; i < i_length; i++)
+	/*for (int i = 0; i < i_length; i++)
 	{
 		pi_table[i] = DEFAULT_VALUE;
-	}
+	}*/
 }
 
-CTable::CTable(string sName, int iLen)
+template<class T>
+CTable<T>::CTable(string sName, int iLen)
 {
 	s_name = sName;
 	i_length = iLen;
-	pi_table = new int[i_length];
+	pi_table = new T[i_length];
 	cout << "parametr: " << s_name << endl;
 
-	for (int i = 0; i < i_length; i++)
+	/*for (int i = 0; i < i_length; i++)
 	{
 		pi_table[i] = DEFAULT_VALUE;
-	}
+	}*/
 }
 
-/*CTable::CTable(string name, int len, int* tab)
+template<class T>
+CTable<T>::CTable(const CTable<T> &pcOther)
 {
-	s_name = name + "_copy";
-	i_length = len;
-	pi_table = new int[i_length];
-	for (int i = 0; i < i_length; i++)
-	{
-		pi_table[i] = tab[i];
-	}
-}*/
-
-CTable::CTable(const CTable &pcOther)
-{
-	//passTable(pcOther);
 	s_name = pcOther.s_name + "_copy";
 	i_length = pcOther.i_length;
-	pi_table = new int[i_length];
+	pi_table = new T[i_length];
 	for (int i = 0; i < i_length; i++)
 	{
 		pi_table[i] = pcOther.pi_table[i];
@@ -55,30 +46,33 @@ CTable::CTable(const CTable &pcOther)
 	cout << "kopiuj: " << s_name << endl;
 }
 
-CTable::~CTable()
+template<class T>
+CTable<T>::~CTable()
 {
 	delete[] pi_table;
 	cout << "usuwam: " << s_name << endl;
 }
 
-void CTable::vSetName(string sName)
+template<class T>
+void CTable<T>::vSetName(string sName)
 {
 	s_name = sName;
 }
 
-
-int CTable::iGetLength()
+template<class T>
+int CTable<T>::iGetLength()
 {
 	return i_length;
 }
 
-bool CTable::bSetTableLength(int length)
+template<class T>
+bool CTable<T>::bSetTableLength(int length)
 {
 	if (length > 0)
 	{
 		//pi_table = (int*)realloc(table, length*sizeof(int));
 
-		int* temp = new int[length];
+		T* temp = new T[length];
 
 		if (length > i_length)
 		{
@@ -86,10 +80,10 @@ bool CTable::bSetTableLength(int length)
 			{
 				temp[i] = pi_table[i];
 			}
-			for (int i = i_length; i < length; i++)
+			/*for (int i = i_length; i < length; i++)
 			{
 				temp[i] = DEFAULT_VALUE;
-			}
+			}*/
 		}
 		else
 		{ 
@@ -109,7 +103,8 @@ bool CTable::bSetTableLength(int length)
 		return false;
 }
 
-bool CTable::bSetValue(int value, int pocket)
+template<class T>
+bool CTable<T>::bSetValue(T value, int pocket)
 {
 	if (pocket < i_length && pocket > -1)
 	{
@@ -120,7 +115,8 @@ bool CTable::bSetValue(int value, int pocket)
 		return false;
 }
 
-int CTable::iGetValue(int pocket, int success)
+template<class T>
+T CTable<T>::iGetValue(int pocket, int success)
 {
 	if (pocket < i_length && pocket > 0)
 	{
@@ -130,16 +126,18 @@ int CTable::iGetValue(int pocket, int success)
 	else
 	{
 		success = -1;
-		return -1;
+		return T();
 	}
 }
 
-CTable CTable::Clone()
+template<class T>
+CTable<T> CTable<T>::Clone()
 {
 	return CTable(*this);
 }
 
-void CTable::vCopyTable(CTable table)
+template<class T>
+void CTable<T>::vCopyTable(CTable table)
 {
 	bSetTableLength(i_length);
 	for (int i = 0; i < i_length; i++)
@@ -148,16 +146,25 @@ void CTable::vCopyTable(CTable table)
 	}
 }
 
-string CTable::sToString()
+template<class T>
+string CTable<T>::sToString()
 {
 	string temp = s_name + "\nlen: " + sIntToStr(i_length) + "\nvalues: ";
 
 	for (int i = 0; i < i_length; i++)
 	{
 		if (i < i_length - 1)
-			temp += sIntToStr(pi_table[i]) + ", ";
+		{ 
+			stringstream buffer;
+			buffer << pi_table[i];
+			temp += buffer.str() + ", ";
+		}
 		else
-			temp += sIntToStr(pi_table[i]);
+		{ 
+			stringstream buffer;
+			buffer << pi_table[i];
+			temp += buffer.str();
+		}
 	}
 	temp += "\n";
 	return temp;
@@ -192,3 +199,8 @@ string sIntToStr(int n)
 	temp += n % 10 + 48;
 	return temp;
 }
+
+template class CTable<int>;
+template class CTable<double>;
+template class CTable<char>;
+template class CTable<Osoba>;
