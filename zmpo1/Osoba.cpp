@@ -32,7 +32,7 @@ string Osoba::sGetName()
 
 ostream& operator<<(ostream &out, const Osoba &osoba)
 {
-	return out << "Name: " << (*osoba.sName) << endl << "Age: " << osoba.iAge << endl;
+	return out << "Person(Name: " << (*osoba.sName) << ", " << "Age: " << osoba.iAge << ")" << endl;
 }
 
 istream& operator>>(istream &in, Osoba &osoba)
